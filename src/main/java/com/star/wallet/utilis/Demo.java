@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class Test {
+public class Demo {
     // 更換成對應環境地址
     private static String URL = "http://localhost:18003/api/wallet/";
 
