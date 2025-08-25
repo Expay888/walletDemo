@@ -12,11 +12,10 @@ import java.io.Serializable;
 @Data
 public class CreateAddresReq extends BaseDto implements Serializable {
 
-    /** 业务类型:CREATEUSER创建用户，CREATEORDER创建订单 */
     @NotBlank(message = "业务类型不能为空")
     private String buzType = "CREATEUSER"; // 暂时只支持创建用户模式
 
-    /** 当业务类型为CREATEUSER时填用户code,当业务类型为CREATEORDER时传订单号 */
+    /** 当业务类型为CREATEUSER时填用户code */
     @NotBlank(message = "业务参数不能为空")
     private String buzValue;
 

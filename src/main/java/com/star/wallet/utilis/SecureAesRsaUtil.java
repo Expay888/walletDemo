@@ -16,10 +16,6 @@ import java.util.Map;
 @Slf4j
 public class SecureAesRsaUtil {
 
-    public static final String PADDING = "PKCS5Padding";
-
-    public static final String MODE = "CBC";
-
     public static Map<String, Object> genKeyPair(){
         RSA rsa = new RSA();
         Map<String, Object> keyMap = new HashMap<String, Object>(2);

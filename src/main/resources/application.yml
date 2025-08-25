@@ -4,7 +4,7 @@ server:
 # spring
 spring:
   application:
-    name: wallet-demo
+    name: expay-wallet-demo
   servlet:
     multipart:
       max-file-size: 10MB

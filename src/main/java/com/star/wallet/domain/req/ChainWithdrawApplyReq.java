@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
- * 提币记录对象 chain_withdraw_record
+ * 提币记录对象
  * 
  * @author alex
  * @date 2025-03-08

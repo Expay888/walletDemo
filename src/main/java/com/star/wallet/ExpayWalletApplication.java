@@ -6,11 +6,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
-public class StartWalletSDKApplication {
+public class ExpayWalletApplication {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(StartWalletSDKApplication.class, args);
+        SpringApplication.run(ExpayWalletApplication.class, args);
     }
 
 }

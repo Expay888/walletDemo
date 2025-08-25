@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 /**
- * 提币申请详情查询 chain_withdraw_record
+ * 提币申请详情查询
  * 
  * @author alex
  * @date 2025-03-08
