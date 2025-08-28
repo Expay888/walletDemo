@@ -20,4 +20,5 @@ public class BaseDto implements Serializable {
     @NotNull(message = "时间戳不能为空")
     private Long timestamp = System.currentTimeMillis();
 
+
 }

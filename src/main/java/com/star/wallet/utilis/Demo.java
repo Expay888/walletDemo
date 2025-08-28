@@ -21,7 +21,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class Demo {
     // 更換成對應環境地址
-    private static String URL = "http://localhost:18003/api/wallet/";
+    private static String URL = "https://openapi.testexxx.com/api/wallet/";
+
+//    private static String URL = "http://127.0.0.1:18003/api/wallet/";
 
     //租戶code
     private static String tenantCode = "CASINO1";
@@ -54,8 +56,10 @@ public class Demo {
         // ============== 组装入参 ========================
         CreateAddresReq req = new CreateAddresReq();
         req.setBuzType("CREATEUSER");
-        req.setBuzValue(System.currentTimeMillis() + "");
+        req.setBuzValue("t9_test_01");
         req.setChainType("EVM");
+
+//        {"buzType":"CREATEUSER","buzValue":"t9_test_01","chainType":"TRON","orgCode":"DALAOJIA","tenantCode":"EXPAY01"}
 
 
         req.setTenantCode(tenantCode);
@@ -161,16 +165,13 @@ public class Demo {
         req.setProtocol("ERC20");
         req.setCoinName("EX");
 
-        req.setUserUid("edb3f81ef82246a08e1bdcc58bfbd2da");
-        req.setOrgUserId("HB64311");
+        req.setOrgUserId("HB64311");  // 提幣用戶的商戶端用戶id
+        req.setUserUid("edb3f81ef82246a08e1bdcc58bfbd2da");//提幣用戶通過地址創建接口 返回的對應的錢包uid
         req.setAmount(new BigDecimal("200"));
 
 
         //測試地址
-        req.setToAddress("0xa90e79ac64cc38bbda91047992b5650dba34ed3c");//
-
-
-
+        req.setToAddress("0xa90e79ac64cc38bbda91047992b5650dba34ed3c");//  提給誰，這是收款方的地址，由用戶自己複製過來
 
 
         String orderNo = RandomUtil.randomString(6);
