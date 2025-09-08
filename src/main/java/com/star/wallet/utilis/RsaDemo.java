@@ -4,7 +4,7 @@ public class RsaDemo {
 
     public static void main(String[] args) {
         // 加密內容
-        String data ="test";
+        String data ="{\"buzType\":\"CREATEUSER\",\"buzValue\":\"6\",\"chainType\":\"TRON\",\"orgCode\":\"PAYORG001\",\"tenantCode\":\"PAYWIN001\",\"timestamp\":1741543741543}";
         System.out.println("加密前：" + data);
         // 公鑰
         String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDFLJJgM6B+jcP1kCpyKDUk/0GYfJ5ePP4htmXEcaLbPM8W9CgnCPDIw1lIIcBX+6LM4HhElVNw/mOPeAy1hVRLgsmDJKUFQBPnEOqD9pMeoSyFSaU7dunC65YAW/sRZvdOvFwwDcJJWorG+mLXwUTNpNwrFXqya1CtafYWmrEI0QIDAQAB";
@@ -26,6 +26,6 @@ public class RsaDemo {
          加密後：QJTD3tI5goZzrBN66+1OCogSLQCQzHKv6VOBjo7jbm1lsI8ithOc1i3OWJndzdahVdwtFSJZXneIrbzHXoFO7a+Sy/5WTjpL0v2h6fN6yrb/qSUEyMmBxeOkvNhx3kOSG9l2J8hFIVxOVeX9BxBqR852IfVctC/KvX5iHAdhQaM=
          解密後：test
         **/
-
     }
+
 }
