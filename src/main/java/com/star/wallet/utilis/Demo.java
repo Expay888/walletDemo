@@ -2,12 +2,11 @@ package com.star.wallet.utilis;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.star.wallet.domain.common.CommonReqDto;
 import com.star.wallet.domain.common.CommonRespDto;
-import com.star.wallet.domain.req.ChainWithdrawApplyReq;
-import com.star.wallet.domain.req.ChainWithdrawQueryReq;
-import com.star.wallet.domain.req.CheckAddresReq;
-import com.star.wallet.domain.req.CreateAddresReq;
+import com.star.wallet.domain.req.*;
+import com.star.wallet.domain.resp.ChainOrgBalanceQueryResp;
 import com.star.wallet.domain.resp.ChainWithdrawApplyResp;
 import com.star.wallet.domain.resp.CheckAddresResp;
 import com.star.wallet.domain.resp.CreateAddresResp;
@@ -38,13 +37,15 @@ public class Demo {
 
     public static void main(String[] args) {
         // 1、创建 or 获取地址
-        createOrQueryAddress();
+//        createOrQueryAddress();
         // 2、提幣
-        withdraw();
+//        withdraw();
         // 3、查询提币状态
-        withdrawQuery();
+//        withdrawQuery();
         // 4、檢查地址是否為平臺地址
-        checkAddress();
+//        checkAddress();
+        // 5、查询商户钱包余额
+        queryOrgBalance();
 
     }
 
@@ -265,7 +266,60 @@ public class Demo {
 
             System.out.println(commonRespDto);
         } catch (IOException e) {
-            log.error("提币申请请求失败",e); // 打印异常信息 // 打印异常信息
+            log.error("提币申请状态查询请求失败",e); // 打印异常信息 // 打印异常信息
+        }
+    }
+
+
+    public static void queryOrgBalance(){
+        // ============== 组装入参 ========================
+        ChainOrgBalanceQueryReq req = new ChainOrgBalanceQueryReq();
+
+        req.setTenantCode(tenantCode);
+        req.setOrgCode(orgCode);
+
+        // 不传则返回全部
+        req.setChainType("EVM");
+        req.setProtocol("ERC20");
+        req.setCoinName("EX");
+
+        req.setTimestamp(System.currentTimeMillis());
+
+        //商户调用： 钱包端公钥加密
+        String encryptData = SecureAesRsaUtil.publicEncryptData(JSON.toJSONString(req), wPublic);
+
+        CommonReqDto reqDto = new CommonReqDto();
+        reqDto.setTenantCode(tenantCode);
+        reqDto.setOrgCode(orgCode);
+        reqDto.setData(encryptData);
+
+        // ================== 开始请求 =========================
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS) // 设置连接超时时间为10秒
+                .readTimeout(30, TimeUnit.SECONDS)    // 设置读取超时时间为30秒
+                .writeTimeout(15, TimeUnit.SECONDS)   // 设置写入超时时间为15秒
+                .build();
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(mediaType, JSON.toJSONString(reqDto));
+
+        Request request = new Request.Builder()
+                .url(URL + "/queryOrgBalance")
+                .post(requestBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            // 处理响应
+            String encryptResp = response.body().string();
+            // 开始解密 调用方私钥解密
+            String resp = SecureAesRsaUtil.privatDecryptData(encryptResp, orgPrivate);
+
+            CommonRespDto<ChainOrgBalanceQueryResp> commonRespDto = JSON.parseObject(resp,new TypeReference<CommonRespDto<ChainOrgBalanceQueryResp>>() {});
+
+            System.out.println(commonRespDto);
+        } catch (IOException e) {
+            log.error("查询商户可用余额请求失败",e); // 打印异常信息 // 打印异常信息
         }
     }
 
